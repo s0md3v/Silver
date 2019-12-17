@@ -1,0 +1,70 @@
+{
+    "by_version": {
+        "PostgreSQL DB": {
+            "9.5.11": false
+        },
+        "Pure-FTPd": {
+            "pure-ftpd": false
+        },
+        "Dovecot imapd": {
+            "dovecot": false
+        },
+        "OpenSSH": {
+            "5.3": false,
+            "3.5": true
+        },
+        "MySQL": {
+            "5.7.26-29-log": true
+        },
+        "ISC BIND": {
+            "9.8.2rc1": false
+        },
+        "IdeaSmtpServer": {
+            "0.83.320": false
+        },
+        "IdeaWebServer": {
+            "0.83.320": false
+        },
+        "Dovecot pop3d": {
+            "dovecot": false
+        },
+        "Apache httpd": {
+            "http_server": false
+        },
+        "Microsoft IIS httpd": {
+            "10.0": false
+        },
+        "openssh": {
+            "3.5": true
+        },
+        "IdeaPop3Server": {
+            "0.83.320": false
+        },
+        "check_mk": {
+            "1.2.6p16": false
+        },
+        "MiniServ": {
+            "1.860": false
+        }
+    },
+    "by_cpe": {
+        "cpe:/a:dovecot:dovecot": false,
+        "cpe:/a:apache:http_server": false,
+        "cpe:/a:openbsd:openssh:4.3": true,
+        "cpe:/o:microsoft:windows": false,
+        "cpe:/a:apache:http_server:2.2.3": true,
+        "cpe:/a:apache:http_server:2.4.10": true,
+        "cpe:/o:debian:debian_linux": false,
+        "cpe:/o:linux:linux_kernel": false,
+        "cpe:/a:apache:http_server:2.2.15": true,
+        "cpe:/a:igor_sysoev:nginx": false,
+        "cpe:/a:wordpress:wordpress:5.3": false,
+        "cpe:/a:openbsd:openssh:7.4": true,
+        "cpe:/a:openbsd:openssh:7.4p1": false,
+        "cpe:/a:isc:bind:9.8.2rc1": false,
+        "cpe:/a:pureftpd:pure-ftpd": false,
+        "cpe:/a:openbsd:openssh:5.3": true,
+        "cpe:/a:openbsd:openssh:6.6": true,
+        "cpe:/a:apache:http_server:2.0.40": true
+    }
+}
