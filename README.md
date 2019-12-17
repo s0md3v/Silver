@@ -36,6 +36,10 @@ scanning over time and much more.
 *\*Shodan integration is optional but when linked, Silver can automatically use Shodan to retrieve service and vulnerability data if a host has a lot of ports open to save resources.
 Shodan credits used per scan by Silver can be throttled. The minimum number of ports to trigger Shodan can be configured as well.*
 
+### Requirements
+- [nmap](https://nmap.org/)
+- [masscan](https://github.com/robertdavidgraham/masscan)
+
 ### Usage
 
 > Note: Silver scans all TCP ports by default i.e. ports `0-65535`.
