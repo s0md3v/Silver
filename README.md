@@ -30,10 +30,10 @@ scanning over time and much more.
 - Resumable scanning
 - Slack notifcations
 - multi-core utilization
-- Vulnerbility data caching
+- Vulnerability data caching
 - Smart Shodan integration*
 
-*\*Silver can automatically use Shodan to retrieve service and vulnerability data if a host has a lot of ports open to save resources.
+*\*Shodan integration is optional but when linked, Silver can automatically use Shodan to retrieve service and vulnerability data if a host has a lot of ports open to save resources.
 Shodan credits used per scan by Silver can be throttled. The minimum number of ports to trigger Shodan can be configured as well.*
 
 ### Usage
