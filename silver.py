@@ -71,7 +71,7 @@ if exclude:
 else:
 	exclude = ''
 
-os.system('masscan %s -p%s --rate 10000 -oG %s %s%s>/dev/null 2>&1' % (host, ports_to_scan, savefile, hostfile, exclude))
+os.system('masscan%s-p%s --rate 10000 -oG %s %s %s >/dev/null 2>&1' % (host, ports_to_scan, savefile, hostfile, exclude))
 master_db = parse_masscan(savefile)
 for host in masscan_saved:
 	master_db[host] = masscan_saved[host]
