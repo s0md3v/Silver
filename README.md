@@ -24,8 +24,6 @@ scanning over time and much more.
 
 ![demo](https://i.ibb.co/nPK8yD8/Untitled.png)
 
-> Note: Silver isn't compatible with Python 2.
-
 ### Features
 - Resumable scanning
 - Slack notifcations
@@ -36,13 +34,39 @@ scanning over time and much more.
 *\*Shodan integration is optional but when linked, Silver can automatically use Shodan to retrieve service and vulnerability data if a host has a lot of ports open to save resources.
 Shodan credits used per scan by Silver can be throttled. The minimum number of ports to trigger Shodan can be configured as well.*
 
-### Requirements
+### Setup
+
+#### Downloading Silver
+`git clone https://github.com/s0md3v/Silver`
+
+#### Requirements
+##### External Programs
 - [nmap](https://nmap.org/)
 - [masscan](https://github.com/robertdavidgraham/masscan)
+##### Python libraries
+- psutil
+- requests
+
+Required Python libraries can be installed by executing `pip3 install -r requirements.txt` in `Silver` directory.
+
+#### Configuration
+Slack WebHook, Shodan API key and limits can be configured by editing respective variables in `/core/memory.py`
+
+#### Setting up Slack notifications
+- Create a workspace on slack, [here](https://slack.com/)
+- Create an app, [here](https://api.slack.com/apps/new)
+- Enable WebHooks from the app and copy the URL from there to Silver's `/core/memory.py` file.
+
+#### Run it as root
+Silver requires root permission because it uses masscan under the hood which needs to be run as root to do port scanning. Use `sudo`.
 
 ### Usage
 
-> Note: Silver scans all TCP ports by default i.e. ports `0-65535`.
+#### Before you start
+
+:warning: Run Silver as root and with `python3` i.e. with `sudo python3 silver.py <your input>`
+
+:warning: Silver scans all TCP ports by default i.e. ports `0-65535`. Use `--quick` switch to only scan top ~1000 ports.
 
 #### Scan host(s) from command line
 ```
@@ -62,14 +86,6 @@ python3 silver.py -i /path/to/targets.txt
 ```
 python3 silver.py -i /path/to/targets.txt -t 4
 ```
-
-### Configuration
-Slack WebHook, Shodan API key and limits can be configured by editing respective variables in `/core/memory.py`
-
-#### Setting up Slack notifications
-- Create a workspace on slack, [here](https://slack.com/)
-- Create an app, [here](https://api.slack.com/apps/new)
-- Enable WebHooks from the app and copy the URL from there to Silver's `/core/memory.py` file.
 
 #### Support the developer
 Liked the project? Donate a few bucks to motivate me to keep writing code for free.
