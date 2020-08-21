@@ -87,12 +87,6 @@ python3 silver.py -i /path/to/targets.txt
 python3 silver.py -i /path/to/targets.txt -t 4
 ```
 
-#### Support the developer
-Liked the project? Donate a few bucks to motivate me to keep writing code for free.
-
-[![Donate](https://i.ibb.co/1R5wK5S/28491754-14774f54-6f14-11e7-9975-8a5faeda7e30.gif)](https://s0md3v.github.io/donate.html)
-
-
 #### Contribution
 You can contribute to this project by providing suggestions, reporting sensible issues and spreading the word.
 Pull requessts for the following will not be accepted:
