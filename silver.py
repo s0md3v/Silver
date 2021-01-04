@@ -12,7 +12,7 @@ import core.memory
 from modules.pymap import pymap
 from modules.shodan import shodan
 from modules.vulners import vulners
-from core.colors import run, end, good, info, white
+from core.colors import run, bad, end, good, info, white
 from core.utils import notify, load_json, write_json, parse_masscan
 
 print('''
@@ -25,6 +25,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(help='host(s) to scan', dest='host', nargs='?')
 parser.add_argument('-i', help='path of input file', dest='input_file')
 parser.add_argument('-m', '--method', help='software or cpe', dest='method')
+parser.add_argument('-r', '--rate', help='masscan packets per second rate', dest='rate', type=int, default=1000)
 parser.add_argument('-t', '--threads', help='nmap threads to run in parallel', dest='threads', type=int)
 parser.add_argument('-q', '--quick', help='only scan top ~1000 ports', dest='quick', action='store_true')
 args = parser.parse_args()
@@ -35,6 +36,9 @@ method = args.method
 threads = args.threads
 input_file = args.input_file or ('%s/targets.txt' % cwd)
 savefile = cwd + '/result-' + input_file.split('/')[-1]
+
+if not host:
+	quit('%s No hosts to scan.' % bad)
 
 arg_dict = vars(args)
 for key in arg_dict:
@@ -71,7 +75,7 @@ if exclude:
 else:
 	exclude = ''
 
-os.system('masscan%s-p%s --rate 10000 -oG %s %s %s >/dev/null 2>&1' % (host, ports_to_scan, savefile, hostfile, exclude))
+os.system('masscan%s-p%s --rate %i -oG %s %s %s >/dev/null 2>&1' % (host, ports_to_scan, args.rate, savefile, hostfile, exclude))
 master_db = parse_masscan(savefile)
 for host in masscan_saved:
 	master_db[host] = masscan_saved[host]
