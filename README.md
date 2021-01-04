@@ -27,7 +27,8 @@ scanning over time and much more.
 ### Features
 - Resumable scanning
 - Slack notifcations
-- multi-core utilization
+- Multi-core utilization
+- Supports: IPs, CIDR & hostnames
 - Vulnerability data caching
 - Smart Shodan integration*
 
@@ -39,11 +40,13 @@ Shodan credits used per scan by Silver can be throttled. The minimum number of p
 #### Downloading Silver
 `git clone https://github.com/s0md3v/Silver`
 
-#### Requirements
-##### External Programs
+### Requirements
+
+#### External Programs
 - [nmap](https://nmap.org/)
 - [masscan](https://github.com/robertdavidgraham/masscan)
-##### Python libraries
+
+#### Python libraries
 - psutil
 - requests
 
@@ -57,9 +60,6 @@ Slack WebHook, Shodan API key and limits can be configured by editing respective
 - Create an app, [here](https://api.slack.com/apps/new)
 - Enable WebHooks from the app and copy the URL from there to Silver's `/core/memory.py` file.
 
-#### Run it as root
-Silver requires root permission because it uses masscan under the hood which needs to be run as root to do port scanning. Use `sudo`.
-
 ### Usage
 
 #### Before you start
@@ -69,20 +69,35 @@ Silver requires root permission because it uses masscan under the hood which nee
 :warning: Silver scans all TCP ports by default i.e. ports `0-65535`. Use `--quick` switch to only scan top ~1000 ports.
 
 #### Scan host(s) from command line
+
 ```
 python3 silver.py 127.0.0.1
 python3 silver.py 127.0.0.1/22
 python3 silver.py 127.0.0.1,127.0.0.2,127.0.0.3
 ```
+
 ##### Scan top ~1000 ports
+
 ```
 python3 silver.py 127.0.0.1 --quick
 ```
+
+##### Choose packets to be sent per seconds
+
+```
+python3 silver.py 127.0.0.1 --rate 10000
+```
+
 ##### Scan hosts from a file
+
 ```
 python3 silver.py -i /path/to/targets.txt
 ```
+
+> Note: If your input file contains any hostnames, use the `--resolve` flag to tell Silver to resolve them to IPs because masscan only scans IPs.
+
 ##### Set max number of parallel nmap instances
+
 ```
 python3 silver.py -i /path/to/targets.txt -t 4
 ```
