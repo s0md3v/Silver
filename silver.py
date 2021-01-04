@@ -12,6 +12,7 @@ import core.memory
 from modules.pymap import pymap
 from modules.shodan import shodan
 from modules.vulners import vulners
+from core.resolver import resolver
 from core.colors import run, bad, end, good, info, white
 from core.utils import notify, load_json, write_json, parse_masscan
 
@@ -28,13 +29,15 @@ parser.add_argument('-m', '--method', help='software or cpe', dest='method')
 parser.add_argument('-r', '--rate', help='masscan packets per second rate', dest='rate', type=int, default=1000)
 parser.add_argument('-t', '--threads', help='nmap threads to run in parallel', dest='threads', type=int)
 parser.add_argument('-q', '--quick', help='only scan top ~1000 ports', dest='quick', action='store_true')
+parser.add_argument('--resolve', help='txt file contains hostnames too', dest='resolve', action='store_true')
 args = parser.parse_args()
 
-host = args.host
+host = ','.join(resolver(args.host.split(','))) if args.host else args.host
 quick = args.quick
 method = args.method
 threads = args.threads
 input_file = args.input_file
+
 target_name = ''
 
 if host:
@@ -46,6 +49,10 @@ else:
 
 savefile = cwd + '/result-' + target_name + '.txt'
 nmapfile = cwd + '/nmap-' + target_name + '.xml'
+
+if args.resolve and input_file:
+	print('%s Resolving hostnames to IPs for masscan' % run)
+	input_file = resolver(input_file)
 
 arg_dict = vars(args)
 for key in arg_dict:
@@ -121,7 +128,6 @@ if shodan_eligible:
 			if 'software' in master_db[host][port]:
 				exclude.append(host)
 			break
-print('%s ETA: %i seconds ' % (info, count * 22))
 
 num_cpus = threads or psutil.cpu_count()
 if num_cpus > len(master_db):
@@ -133,6 +139,7 @@ else:
 	print('%s Spawning 1 nmap instance' % run)
 
 if num_cpus != 0:
+	print('%s ETA: %i seconds ' % (info, count * 22/num_cpus))
 	pool = Pool(processes=num_cpus)
 
 	results = [pool.apply_async(pymap, args=(host, master_db[host], exclude, nmapfile)) for host in master_db]
