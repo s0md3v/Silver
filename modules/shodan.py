@@ -42,7 +42,7 @@ def shodan(ip):
 			else:
 				result[ip][port]['version'] = ''
 			if 'vulns' in each:
-				cache(software, version, 'dummy')
+				cache(software, version, 'dummy', '')
 			elif software and version:
 				if cpe_boolean:
 					for cpe in cpes:
