@@ -34,11 +34,18 @@ host = args.host
 quick = args.quick
 method = args.method
 threads = args.threads
-input_file = args.input_file or ('%s/targets.txt' % cwd)
-savefile = cwd + '/result-' + input_file.split('/')[-1]
+input_file = args.input_file
+target_name = ''
 
-if not host:
+if host:
+	target_name = host.strip().split(',')[0].strip('/')
+elif input_file:
+	target_name = input_file.split('/')[-1]
+else:
 	quit('%s No hosts to scan.' % bad)
+
+savefile = cwd + '/result-' + target_name + '.txt'
+nmapfile = cwd + '/nmap-' + target_name + '.xml'
 
 arg_dict = vars(args)
 for key in arg_dict:
@@ -74,7 +81,6 @@ if exclude:
 	exclude = ' --exclude ' + ','.join(exclude) + ' '
 else:
 	exclude = ''
-
 os.system('masscan%s-p%s --rate %i -oG %s %s %s >/dev/null 2>&1' % (host, ports_to_scan, args.rate, savefile, hostfile, exclude))
 master_db = parse_masscan(savefile)
 for host in masscan_saved:
@@ -129,7 +135,7 @@ else:
 if num_cpus != 0:
 	pool = Pool(processes=num_cpus)
 
-	results = [pool.apply_async(pymap, args=(host, master_db[host], exclude)) for host in master_db]
+	results = [pool.apply_async(pymap, args=(host, master_db[host], exclude, nmapfile)) for host in master_db]
 
 	for p in results:
 		result = p.get()
