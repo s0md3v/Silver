@@ -5,6 +5,8 @@ import socket
 import concurrent.futures
 
 def resolve(hostname):
+	if re.search(r'^\d+\.\d+\.\d+\.\d+$', hostname):
+		return hostname
 	try:
 		return socket.gethostbyaddr(hostname)[2][0]
 	except socket.gaierror:
@@ -25,15 +27,10 @@ def resolver(hostnames):
 		all_ips = set()
 		with open(hostnames, 'r') as inpfile:
 			for line in inpfile:
-				line = line.strip()
-				if re.search(r'\d+\.\d+\.\d+\.\d+', line):
-					result.add(line)
-				else:
-					resolved.append(line)
+				resolved.append(line)
 		result = handler(filter(None, resolved))
-		all_ips.update(set(result))
 		with open('silver-' + hostnames, 'w+') as outfile:
-			for ip in all_ips:
+			for ip in result:
 				outfile.write(ip + '\n')
 		return 'silver-' + hostnames
 	else:
