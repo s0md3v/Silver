@@ -5,7 +5,7 @@ import socket
 import concurrent.futures
 
 def resolve(hostname):
-	if re.search(r'^\d+\.\d+\.\d+\.\d+$', hostname):
+	if re.search(r'^\d+\.\d+\.\d+\.\d+', hostname):
 		return hostname
 	try:
 		return socket.gethostbyaddr(hostname)[2][0]
