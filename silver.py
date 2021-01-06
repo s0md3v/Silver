@@ -20,6 +20,9 @@ print('''
 \t%s𝘴𝘪𝘭𝘷𝘦𝘳%s
 ''' % (white, end))
 
+if os.geteuid() != 0:
+	quit('%s You need to run Silver a root!' % info)
+
 cwd = sys.path[0]
 
 parser = argparse.ArgumentParser()
