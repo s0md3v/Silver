@@ -44,7 +44,7 @@ input_file = args.input_file
 target_name = ''
 
 if host:
-	target_name = host.strip().split(',')[0].strip('/')
+	target_name = host.strip().split(',')[0].split('/')[0]
 elif input_file:
 	target_name = input_file.split('/')[-1]
 else:
