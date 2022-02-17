@@ -1,10 +1,15 @@
-import json
+import time
 
 from core.requester import requester
-from core.utils import reader, write_json
+from core.utils import write_json, load_json
 
 file = './db/vulners_cache.json'
-database = json.loads(reader(file))
+
+database = load_json(file)
+current_time = int(time.time())
+if 'time' not in database or (current_time - database.get('time', 0)) > 86400:
+    database = {'by_cpe':{}, 'by_version':{}}
+database['time'] = current_time
 
 def vulners(software, version, cpe=False):
     if software and version:
