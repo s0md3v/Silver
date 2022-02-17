@@ -1,5 +1,4 @@
 import re
-import sys
 import socket
 
 import concurrent.futures
@@ -24,11 +23,10 @@ def handler(hostnames):
 def resolver(hostnames):
 	if type(hostnames) == str:
 		resolved = []
-		all_ips = set()
 		with open(hostnames, 'r') as inpfile:
 			for line in inpfile:
 				resolved.append(line)
-		result = handler(filter(None, resolved))
+		result = set(handler(filter(None, resolved)))
 		with open('silver-' + hostnames, 'w+') as outfile:
 			for ip in result:
 				outfile.write(ip + '\n')
