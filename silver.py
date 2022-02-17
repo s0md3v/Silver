@@ -64,6 +64,7 @@ cached_db = load_json(savefile)
 if args.use_shodan:
 	result = shodan(targets, cached_db)
 	write_json(savefile, result)
+	print('%s Output saved to %s' % (info, savefile))
 	quit()
 
 arg_dict = vars(args)

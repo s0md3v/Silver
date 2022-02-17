@@ -6,7 +6,7 @@ def shodan(ips, exclude):
 	result = {}
 	for ip in ips:
 		if ip in exclude:
-			if exclude[ip]['ports']:
+			if exclude[ip].get(['ports'], False):
 				message = '%s has a vulnerable service' % (ip)
 				notify('[Vuln] %s' % message)
 				print('%s %s' % (good, message))
